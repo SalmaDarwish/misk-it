@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <div class="row mt-3">
+      <table class="table table-striped table-hover table-bordered ">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center">#</th>
+        <th scope="col">E /M</th>
+			<th scope="col">JAN</th>
+			<th scope="col">FEB</th>
+            <th scope="col">MAR</th>
+			<th scope="col">APR</th>
+			<th scope="col">MAY</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employer of EMPLOYERS; let i=index;">
+        <th scope="row" class="text-center">{{i+1}}</th>
+        <td>{{employer.name}}</td>
+        <td>{{employer.JAN}} </td>
+        <td>{{employer.FEB}}</td>
+        <td>{{employer.MAR}}</td>
+        <td>{{employer.APR}}</td>
+        <td>{{employer.MAY}}</td>
+        
+
+      </tr>
+      
+    </tbody>
+  </table>
+  </div>
+
+  <div class="row mt-5">
+    <div class="chartContainer">
+      <apx-chart     [yaxis]="yAxis" [xaxis]="xAxis"
+      [legend]="legend"  [grid]="grid"     [tooltip]="tooltip"
+      [plotOptions]="plotOptions"
+      [fill]="fill"
+      [series]="series" [chart]="chartDetails" [labels]="chartLabels" [title]="chartTitle" [dataLabels]="chartDataLabels"></apx-chart>
+  </div>
+  </div>
+
+</div>
