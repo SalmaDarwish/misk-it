@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApexChart, ApexDataLabels, ApexNonAxisChartSeries,ApexAxisChartSeries, ApexTitleSubtitle, ApexGrid, ApexMarkers } from 'ng-apexcharts';
-import {ChartComponent,ApexPlotOptions,ApexYAxis,ApexLegend,ApexStroke,ApexXAxis,ApexFill,ApexTooltip} from "ng-apexcharts";
+import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ApexChart, ApexDataLabels, ApexNonAxisChartSeries, ApexAxisChartSeries, ApexTitleSubtitle, ApexGrid, ApexMarkers } from 'ng-apexcharts';
+import { ChartComponent, ApexPlotOptions, ApexYAxis, ApexLegend, ApexStroke, ApexXAxis, ApexFill, ApexTooltip } from "ng-apexcharts";
 import { Employer } from '../employer';
 import { Salaries } from '../salaries';
 
@@ -18,20 +19,101 @@ export class HomeComponent implements OnInit {
 
   series: ApexAxisChartSeries;
   chart: ApexChart;
-  title:ApexTitleSubtitle;
-  stroke:ApexStroke;
-  fill:ApexFill;
-  grid:ApexGrid;
-  markers:ApexMarkers;
-  datalabels:ApexDataLabels;
-  yAxis:ApexYAxis;
-  xAxis:ApexXAxis;
-  plotOptions:ApexPlotOptions;
+  title: ApexTitleSubtitle;
+  stroke: ApexStroke;
+  fill: ApexFill;
+  grid: ApexGrid;
+  markers: ApexMarkers;
+  datalabels: ApexDataLabels;
+  yAxis: ApexYAxis;
+  xAxis: ApexXAxis;
+  plotOptions: ApexPlotOptions;
   legend: ApexLegend;
-  toolbar:ApexChart;
-  tooltip:ApexTooltip;
+  toolbar: ApexChart;
+  tooltip: ApexTooltip;
+  EmployeName: string = ""
+  janSalary: number
+  febSalary:number
+  searchList: Employer[] = []
+  filterForm = new FormGroup({
+    name: new FormControl("", []),
+    jan: new FormControl(),
+    feb: new FormControl(),
 
-  Months:string[]=["January","February","March","April","May"]
+
+
+  })
+
+  applyFilter(form: FormGroup) {
+    this.searchList = []
+    console.log(form.value)
+    if (this.EmployeName) {
+      for (let i = 0; i < this.EMPLOYERS.length; i++) {
+        if (this.EMPLOYERS[i].name.toLowerCase().includes(this.EmployeName.toLowerCase())) {
+          this.searchList.push(this.EMPLOYERS[i])
+        }
+
+      }
+
+    }
+    if (this.janSalary > 0) {
+      if (this.searchList.length == 0) {
+        for (let i = 0; i < this.EMPLOYERS.length; i++) {
+          if (this.EMPLOYERS[i].JAN == this.janSalary) {
+            this.searchList.push(this.EMPLOYERS[i])
+          }
+
+        }
+      }
+       else {
+        for (let i = 0; i < this.searchList.length; i++) {
+          console.log(this.searchList)
+          if (this.searchList[i].JAN !== this.janSalary) {
+            console.log(this.searchList[i])
+
+              this.searchList.splice(i,1)
+              console.log("i")
+
+          }
+
+        }
+      }
+
+
+
+    }
+    if (this.febSalary > 0) {
+      if (this.searchList.length == 0) {
+        for (let i = 0; i < this.EMPLOYERS.length; i++) {
+          if (this.EMPLOYERS[i].FEB == this.febSalary) {
+            this.searchList.push(this.EMPLOYERS[i])
+          }
+
+        }
+      }
+       else {
+        for (let i = 0; i < this.searchList.length; i++) {
+          console.log(this.searchList)
+          if (this.searchList[i].FEB !== this.febSalary) {
+            console.log(this.searchList[i])
+
+              this.searchList.splice(i,1)
+              console.log("i")
+
+          }
+
+        }
+      }
+
+
+
+    }
+
+  }
+
+
+
+  Months: string[] = ["January", "February", "March", "April", "May"]
 
   EMPLOYERS: Employer[] = [
     {
@@ -41,7 +123,29 @@ export class HomeComponent implements OnInit {
       MAR: 300,
       APR: 350,
       MAY: 400,
-      
+      Departmenet:"Frontend"
+
+    },
+    {
+      name: 'Ahmed Khaled',
+      JAN: 240,
+      FEB: 260,
+      MAR: 300,
+      APR: 350,
+      MAY: 400,
+      Departmenet:"Data Analysis"
+
+
+    },
+    {
+      name: 'Ahmed Adel',
+      JAN: 240,
+      FEB: 270,
+      MAR: 300,
+      APR: 350,
+      MAY: 400,
+      Departmenet:"Backend"
+
     },
     {
       name: 'Karim Khaled',
@@ -50,7 +154,28 @@ export class HomeComponent implements OnInit {
       MAR: 200,
       APR: 250,
       MAY: 300,
-      
+      Departmenet:"Project Manager"
+
+    },
+    {
+      name: 'Karim Mohamed',
+      JAN: 150,
+      FEB: 170,
+      MAR: 200,
+      APR: 250,
+      MAY: 300,
+      Departmenet:"HR"
+
+    },
+    {
+      name: 'Karim Ibrahim',
+      JAN: 150,
+      FEB: 170,
+      MAR: 200,
+      APR: 250,
+      MAY: 300,
+      Departmenet:"Product Manager"
+
     },
     {
       name: 'Mohamed Soliman',
@@ -59,7 +184,18 @@ export class HomeComponent implements OnInit {
       MAR: 400,
       APR: 450,
       MAY: 450,
-      
+      Departmenet:"Product Owner"
+
+    },
+    {
+      name: 'Mohamed Ali',
+      JAN: 350,
+      FEB: 390,
+      MAR: 400,
+      APR: 450,
+      MAY: 450,
+      Departmenet:"Sales Man"
+
     },
     {
       name: 'Mahmoud Samy',
@@ -68,19 +204,21 @@ export class HomeComponent implements OnInit {
       MAR: 200,
       APR: 200,
       MAY: 250,
-      
+      Departmenet:"HR Manager"
+
     },
     {
-      name:'Petar Soliman',
+      name: 'Petar Soliman',
       JAN: 350,
       FEB: 350,
       MAR: 400,
       APR: 450,
       MAY: 500,
-      
+      Departmenet:"Team"
+
     }
   ];
-  Salaries:Salaries[]=[
+  Salaries: Salaries[] = [
     {
       name: 'Jan',
       Ahmed: 250,
@@ -128,110 +266,121 @@ export class HomeComponent implements OnInit {
     toolbar: {
       show: true
     },
-  
-};
 
-chartLabels = Array.from(Object.values(this.Months), breed => breed);
+  };
 
-chartTitle: ApexTitleSubtitle = {
+  chartLabels = Array.from(Object.values(this.Months), breed => breed);
+
+  chartTitle: ApexTitleSubtitle = {
     text: 'Employers\' Salaries',
     align: 'center'
-};
+  };
 
 
-chartDataLabels: ApexDataLabels = {
+  chartDataLabels: ApexDataLabels = {
     enabled: false
-};
-constructor() {
-  
-}
+  };
+  constructor() {
+
+  }
   ngOnInit(): void {
-this.initizalizeChartOptions();
+    this.initizalizeChartOptions();
   }
-private initizalizeChartOptions():void{
-  this.yAxis={
-  title:{
-  text:"Salary in $",
-  style:{
-    fontSize:"15px"
+  private initizalizeChartOptions(): void {
+    this.yAxis = {
+      title: {
+        text: "Salary in $",
+        style: {
+          fontSize: "15px"
+        }
+      }
+    }
+    this.xAxis = {
+      title: {
+        text: "Month",
+        style: {
+          fontSize: "15px"
+        }
+      }
+    }
+    this.series = [{
+      name: this.EMPLOYERS[0].name,
+      data: Array.from(Object.values(this.Salaries), breed => breed.Ahmed)
+
+
+    },
+    {
+      name: this.EMPLOYERS[1].name,
+      data: Array.from(Object.values(this.Salaries), breed => breed.Karim)
+    },
+    {
+      name: this.EMPLOYERS[2].name,
+      data: Array.from(Object.values(this.Salaries), breed => breed.Mohamed)
+    },
+    {
+      name: this.EMPLOYERS[3].name,
+      data: Array.from(Object.values(this.Salaries), breed => breed.Mahmoud)
+    },
+    {
+      name: this.EMPLOYERS[4].name,
+      data: Array.from(Object.values(this.Salaries), breed => breed.Peter)
+    }
+    ]
+
+    this.fill = {
+      colors: ['#fd8a8a', '#ffdb89', '#9ea1d4', '#ad8e70', '#a8d1d1'],
+      opacity: 1,
+
+
+    }
+
+    this.plotOptions = {
+      bar: {
+        horizontal: false,
+        columnWidth: "70%",
+      }
+    }
+    this.tooltip = {
+      theme: "dark",
+
+      y: {
+        formatter: function (val) {
+          return val + " $ ";
+        }
+      },
+
+    }
+    this.legend = {
+      show: true,
+      position: "top",
+      markers: {
+        width: 12,
+        height: 12,
+        radius: 12,
+        fillColors: ['#fd8a8a', '#ffdb89', '#9ea1d4', '#ad8e70', '#a8d1d1'],
+
+      },
+      onItemHover: {
+        highlightDataSeries: true
+      },
+    }
+    this.grid = {
+      padding: {
+        top: 20
+      },
+
+    }
+
+
+  }
+
+
+  resetTable() {
+    if (!this.EmployeName && !this.janSalary) {
+      this.searchList = []
     }
   }
-}
-this.xAxis={
-  title:{
-    text:"Month",
-    style:{
-      fontSize:"15px"
-    }
-  }
-}
-  this.series=[{
-    name:this.EMPLOYERS[0].name,
-    data:Array.from(Object.values(this.Salaries), breed => breed.Ahmed)
-    
-    
-  },
-{
-  name:this.EMPLOYERS[1].name,
-  data:Array.from(Object.values(this.Salaries), breed => breed.Karim)
-},
-{
-  name:this.EMPLOYERS[2].name,
-  data:Array.from(Object.values(this.Salaries), breed => breed.Mohamed)
-},
-{
-  name:this.EMPLOYERS[3].name,
-  data:Array.from(Object.values(this.Salaries), breed => breed.Mahmoud)
-},
-{
-  name:this.EMPLOYERS[4].name,
-  data:Array.from(Object.values(this.Salaries), breed => breed.Peter)
-}
-]
- 
-  this.fill={
-    colors: ['#fd8a8a', '#ffdb89', '#9ea1d4', '#ad8e70','#a8d1d1'],
-    opacity:1,
-  
+  ngDoCheck() {
 
   }
-
-this.plotOptions={bar: {
-  horizontal: false,
-  columnWidth: "70%",
-}}
-this.tooltip= {
-  theme:"dark",
-  
-  y: {
-    formatter: function(val) {
-      return  val + " $ ";
-    }
-  },
-  
-}
-this.legend={
-  show:true,
-  position:"top",
-  markers: {
-    width: 12,
-    height: 12,
-    radius: 12,
-    fillColors: ['#fd8a8a', '#ffdb89', '#9ea1d4', '#ad8e70','#a8d1d1'],
-    
-},
-onItemHover: {
-  highlightDataSeries: true
-},
-}
-this.grid={
-  padding:{
-    top:20
-  },
-  
-}
-    
-
-}
-
 }

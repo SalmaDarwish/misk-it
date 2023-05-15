@@ -5,5 +5,7 @@ export interface Employer {
         MAR: number;
         APR: number;
         MAY: number;
+        Departmenet:string;
+        
     
 }
