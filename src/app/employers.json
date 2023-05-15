@@ -1,0 +1,103 @@
+ [
+    {
+      "name": "Ahmed Mostafa",
+      "JAN": 250,
+      "FEB": 270,
+      "MAR": 300,
+      "APR": 350,
+      "MAY": 400,
+      "Departmenet":"Frontend"
+
+    },
+    {
+      "name": "Ahmed Khaled",
+      "JAN": 240,
+      "FEB": 260,
+      "MAR": 300,
+      "APR": 350,
+      "MAY": 400,
+      "Departmenet":"Frontend"
+
+
+    },
+    {
+      "name": "Ahmed Adel",
+      "JAN": 240,
+      "FEB": 270,
+      "MAR": 300,
+      "APR": 350,
+      "MAY": 400,
+      "Departmenet":"Backend"
+
+    },
+    {
+      "name": "Karim Khaled",
+      "JAN": 150,
+      "FEB": 170,
+      "MAR": 200,
+      "APR": 250,
+      "MAY": 300,
+      "Departmenet":"Project Manager"
+
+    },
+    {
+      "name": "Karim Mohamed",
+      "JAN": 150,
+      "FEB": 170,
+      "MAR": 200,
+      "APR": 250,
+      "MAY": 300,
+      "Departmenet":"HR"
+
+    },
+    {
+      "name": "Karim Ibrahim",
+      "JAN": 150,
+      "FEB": 170,
+      "MAR": 200,
+      "APR": 250,
+      "MAY": 300,
+      "Departmenet":"Product Manager"
+
+    },
+    {
+      "name": "Mohamed Soliman",
+      "JAN": 350,
+      "FEB": 390,
+      "MAR": 400,
+      "APR": 450,
+      "MAY": 450,
+      "Departmenet":"Product Owner"
+
+    },
+    {
+      "name": "Mohamed Ali",
+      "JAN": 350,
+      "FEB": 390,
+      "MAR": 400,
+      "APR": 450,
+      "MAY": 450,
+      "Departmenet":"Frontend"
+
+    },
+    {
+      "name": "Mahmoud Samy",
+      "JAN": 170,
+      "FEB": 190,
+      "MAR": 200,
+      "APR": 200,
+      "MAY": 250,
+      "Departmenet":"HR"
+
+    },
+    {
+      "name": "Petar Soliman",
+      "JAN": 350,
+      "FEB": 350,
+      "MAR": 400,
+      "APR": 450,
+      "MAY": 500,
+      "Departmenet":"HR"
+
+    }
+  ]

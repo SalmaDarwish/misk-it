@@ -1,10 +1,10 @@
 import { Component, DoCheck, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ApexChart, ApexDataLabels, ApexNonAxisChartSeries, ApexAxisChartSeries, ApexTitleSubtitle, ApexGrid, ApexMarkers } from 'ng-apexcharts';
 import { ChartComponent, ApexPlotOptions, ApexYAxis, ApexLegend, ApexStroke, ApexXAxis, ApexFill, ApexTooltip } from "ng-apexcharts";
 import { Employer } from '../employer';
 import { Salaries } from '../salaries';
-
+import * as EMPLOYERS from '../employers.json'
 
 
 
@@ -35,13 +35,21 @@ export class HomeComponent implements OnInit {
   janSalary: number
   febSalary:number
   searchList: Employer[] = []
+  selectedValue :any;
+  @ViewChild('name') nameInput:any; 
+  @ViewChild('jan') janInput:any; 
+  @ViewChild('feb') febInput:any; 
+  @ViewChild('department') departmentInput:any; 
+
+
+  departements:string[]=[
+    "Frontend","Backend","Project Manager","HR","Product Owner"
+  ]
   filterForm = new FormGroup({
     name: new FormControl("", []),
-    jan: new FormControl(),
-    feb: new FormControl(),
-
-
-
+    jan: new FormControl(""),
+    feb: new FormControl(""),
+    departement: new FormControl(),
   })
 
   applyFilter(form: FormGroup) {
@@ -68,7 +76,7 @@ export class HomeComponent implements OnInit {
        else {
         for (let i = 0; i < this.searchList.length; i++) {
           console.log(this.searchList)
-          if (this.searchList[i].JAN !== this.janSalary) {
+          if (this.searchList[i].JAN !== this.janSalary || !this.searchList[i].name.toLowerCase().includes(this.EmployeName.toLowerCase())) {
             console.log(this.searchList[i])
 
               this.searchList.splice(i,1)
@@ -108,6 +116,45 @@ export class HomeComponent implements OnInit {
 
 
     }
+    if (this.selectedValue) {
+      if (this.searchList.length == 0) {
+        for (let i = 0; i < this.EMPLOYERS.length; i++) {
+          if (this.EMPLOYERS[i].Departmenet === this.selectedValue) {
+            this.searchList.push(this.EMPLOYERS[i])
+          }
+
+        }
+      }
+       else {
+        for (let i = 0; i < this.searchList.length; i++) {
+          console.log(this.searchList)
+          if (this.searchList[i].Departmenet !== this.selectedValue) {
+            console.log(this.searchList[i])
+
+              this.searchList.splice(i,1)
+              console.log("i")
+
+          }
+
+        }
+      }
+
+
+
+    }
+    // if(this.searchList.length==0){
+    //   this.EMPLOYERS=this.searchList
+    // }
+
+  }
+  resetForm(){
+    this.nameInput.nativeElement.value=""
+    this.janInput.nativeElement.value=""
+    this.febInput.nativeElement.value=""
+    this.departmentInput.nativeElement.value=null
+    this.filterForm.reset()
+    this.searchList=[];
+    this.applyFilter(this.filterForm)
 
   }
 
@@ -115,109 +162,107 @@ export class HomeComponent implements OnInit {
 
   Months: string[] = ["January", "February", "March", "April", "May"]
 
-  EMPLOYERS: Employer[] = [
-    {
-      name: 'Ahmed Mostafa',
-      JAN: 250,
-      FEB: 270,
-      MAR: 300,
-      APR: 350,
-      MAY: 400,
-      Departmenet:"Frontend"
+  EMPLOYERS: Employer[] = [    {
+    "name": "Ahmed Mostafa",
+    "JAN": 250,
+    "FEB": 270,
+    "MAR": 300,
+    "APR": 350,
+    "MAY": 400,
+    "Departmenet":"Frontend"
 
-    },
-    {
-      name: 'Ahmed Khaled',
-      JAN: 240,
-      FEB: 260,
-      MAR: 300,
-      APR: 350,
-      MAY: 400,
-      Departmenet:"Data Analysis"
+  },
+  {
+    "name": "Ahmed Khaled",
+    "JAN": 240,
+    "FEB": 260,
+    "MAR": 300,
+    "APR": 350,
+    "MAY": 400,
+    "Departmenet":"Frontend"
 
 
-    },
-    {
-      name: 'Ahmed Adel',
-      JAN: 240,
-      FEB: 270,
-      MAR: 300,
-      APR: 350,
-      MAY: 400,
-      Departmenet:"Backend"
+  },
+  {
+    "name": "Ahmed Adel",
+    "JAN": 240,
+    "FEB": 270,
+    "MAR": 300,
+    "APR": 350,
+    "MAY": 400,
+    "Departmenet":"Backend"
 
-    },
-    {
-      name: 'Karim Khaled',
-      JAN: 150,
-      FEB: 170,
-      MAR: 200,
-      APR: 250,
-      MAY: 300,
-      Departmenet:"Project Manager"
+  },
+  {
+    "name": "Karim Khaled",
+    "JAN": 150,
+    "FEB": 170,
+    "MAR": 200,
+    "APR": 250,
+    "MAY": 300,
+    "Departmenet":"Project Manager"
 
-    },
-    {
-      name: 'Karim Mohamed',
-      JAN: 150,
-      FEB: 170,
-      MAR: 200,
-      APR: 250,
-      MAY: 300,
-      Departmenet:"HR"
+  },
+  {
+    "name": "Karim Mohamed",
+    "JAN": 150,
+    "FEB": 170,
+    "MAR": 200,
+    "APR": 250,
+    "MAY": 300,
+    "Departmenet":"HR"
 
-    },
-    {
-      name: 'Karim Ibrahim',
-      JAN: 150,
-      FEB: 170,
-      MAR: 200,
-      APR: 250,
-      MAY: 300,
-      Departmenet:"Product Manager"
+  },
+  {
+    "name": "Karim Ibrahim",
+    "JAN": 150,
+    "FEB": 170,
+    "MAR": 200,
+    "APR": 250,
+    "MAY": 300,
+    "Departmenet":"Product Manager"
 
-    },
-    {
-      name: 'Mohamed Soliman',
-      JAN: 350,
-      FEB: 390,
-      MAR: 400,
-      APR: 450,
-      MAY: 450,
-      Departmenet:"Product Owner"
+  },
+  {
+    "name": "Mohamed Soliman",
+    "JAN": 350,
+    "FEB": 390,
+    "MAR": 400,
+    "APR": 450,
+    "MAY": 450,
+    "Departmenet":"Product Owner"
 
-    },
-    {
-      name: 'Mohamed Ali',
-      JAN: 350,
-      FEB: 390,
-      MAR: 400,
-      APR: 450,
-      MAY: 450,
-      Departmenet:"Sales Man"
+  },
+  {
+    "name": "Mohamed Ali",
+    "JAN": 350,
+    "FEB": 390,
+    "MAR": 400,
+    "APR": 450,
+    "MAY": 450,
+    "Departmenet":"Frontend"
 
-    },
-    {
-      name: 'Mahmoud Samy',
-      JAN: 170,
-      FEB: 190,
-      MAR: 200,
-      APR: 200,
-      MAY: 250,
-      Departmenet:"HR Manager"
+  },
+  {
+    "name": "Mahmoud Samy",
+    "JAN": 170,
+    "FEB": 190,
+    "MAR": 200,
+    "APR": 200,
+    "MAY": 250,
+    "Departmenet":"HR"
 
-    },
-    {
-      name: 'Petar Soliman',
-      JAN: 350,
-      FEB: 350,
-      MAR: 400,
-      APR: 450,
-      MAY: 500,
-      Departmenet:"Team"
+  },
+  {
+    "name": "Petar Soliman",
+    "JAN": 350,
+    "FEB": 350,
+    "MAR": 400,
+    "APR": 450,
+    "MAY": 500,
+    "Departmenet":"HR"
 
-    }
-  ];
+  }];
   Salaries: Salaries[] = [
     {
       name: 'Jan',
@@ -280,7 +325,7 @@ export class HomeComponent implements OnInit {
   chartDataLabels: ApexDataLabels = {
     enabled: false
   };
-  constructor() {
+  constructor(private formBuilder:FormBuilder ) {
 
   }
   ngOnInit(): void {
@@ -376,7 +421,7 @@ export class HomeComponent implements OnInit {
 
 
   resetTable() {
-    if (!this.EmployeName && !this.janSalary) {
+    if (!this.EmployeName && !this.janSalary && !this.febSalary && !this.selectedValue) {
       this.searchList = []
     }
   }

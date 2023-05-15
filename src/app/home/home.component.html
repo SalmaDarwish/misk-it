@@ -1,18 +1,33 @@
 <div class="container mt-5">
   <div class="row">
-    <form class="d-flex flex-row" [formGroup]="filterForm" (ngSubmit)="applyFilter(filterForm)" >
-      <div class="mb-3 mx-3">
+    <button class="mx-3 btn btn-primary h-50 w-auto mt-4" data-bs-toggle="collapse" href="#collapseExample">filter Panel</button>
+    <form  id="collapseExample" class=" collapse" [formGroup]="filterForm" (ngSubmit)="applyFilter(filterForm)" >
+      <div class="d-flex flex-row">    
+        <div class="mb-3 mx-3">
         <label for="name" class="form-label">Employee Name : </label>
-      <input type="text" id="name" formControlName="name" (change)="resetTable()" [(ngModel)]="EmployeName" class="form-control ">
+      <input type="text" #name id="name" formControlName="name" (change)="resetTable()" [(ngModel)]="EmployeName" class="form-control ">
       </div>
       <div class="mb-3">
         <label for="jan" class="form-label">Jan : </label>
-      <input type="number" id="jan" formControlName="jan" (change)="resetTable()" [(ngModel)]="janSalary" class="form-control ">
+      <input type="number" #jan id="jan" formControlName="jan" (change)="resetTable()" [(ngModel)]="janSalary" class="form-control ">
       </div>
       <div class="mb-3 mx-3">
         <label for="feb" class="form-label">Feb : </label>
-      <input type="number" id="feb" formControlName="feb" (change)="resetTable()" [(ngModel)]="febSalary" class="form-control ">
+      <input type="number" #feb id="feb" formControlName="feb" (change)="resetTable()" [(ngModel)]="febSalary" class="form-control ">
       </div>
+      <div class="mb-3 mx-3">
+        <label for="departement" class="form-label">Departement : </label>
+        <select   #department    (change)="resetTable()"   
+        formControlName="departement" [(ngModel)]="selectedValue"   id="departement" name="departement"  class="form-select   me-3 py-2" aria-label=" disabled Default select example" >
+          <option  selected id="selectedOption"  value="0"  class="text-start "> Choose the departement</option>
+          <option class="text-start"  [ngValue]="departement" *ngFor="let departement of departements">{{departement}} </option>
+      
+        </select>
+      </div>
+      <button class="mx-3 btn btn-primary h-50 mt-4" type="submit">filter</button>
+      <button class="mx-3 btn btn-primary h-50 mt-4" (click)="resetForm()">Reset</button>
+    </div>
+  
       <!-- <div class="mb-3 mx-3">
         <label for="departement" class="form-label">Departement : </label>
         <select           (change)=""
@@ -22,12 +37,12 @@
       
         </select>
       </div> -->
-      <button class="mx-3 btn btn-primary h-50 mt-4">filter</button>
+   
   
     </form>
   </div>
 
-  <div class="row mt-3" *ngIf="searchList">
+  <div class="row mt-3" *ngIf="searchList.length>0">
     <table class="table table-striped table-hover table-bordered ">
   <thead>
     <tr>
@@ -38,6 +53,9 @@
           <th scope="col">MAR</th>
     <th scope="col">APR</th>
     <th scope="col">MAY</th>
+    <th scope="col">Department</th>
+
+    
     </tr>
   </thead>
   <tbody>
@@ -49,6 +67,8 @@
       <td>{{employer.MAR}}</td>
       <td>{{employer.APR}}</td>
       <td>{{employer.MAY}}</td>
+      <td>{{employer.Departmenet}}</td>
+
       
 
     </tr>
@@ -67,6 +87,8 @@
             <th scope="col">MAR</th>
 			<th scope="col">APR</th>
 			<th scope="col">MAY</th>
+      <th scope="col">Department</th>
+
       </tr>
     </thead>
     <tbody>
@@ -78,6 +100,8 @@
         <td>{{employer.MAR}}</td>
         <td>{{employer.APR}}</td>
         <td>{{employer.MAY}}</td>
+        <td>{{employer.Departmenet}}</td>
+
         
 
       </tr>
